@@ -1,5 +1,6 @@
 import csv
 import json
+import sys
 from collections import defaultdict
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
@@ -12,6 +13,7 @@ INVALID = OUTPUT / "invalid_rows.csv"
 PRODUCTS = OUTPUT / "product_summary.csv"
 
 def main():
+    input_path = Path(sys.argv[1]).expanduser().resolve() if len(sys.argv) > 1 else INPUT
     OUTPUT.mkdir(parents=True, exist_ok=True)
     totals = defaultdict(lambda: {
         "quantity": 0,
@@ -22,10 +24,10 @@ def main():
     valid_rows = 0
     total_revenue = Decimal("0")
 
-    if not INPUT.exists():
-        raise FileNotFoundError(f"Input file not found: {INPUT}")
+    if not input_path.exists():
+        raise FileNotFoundError(f"Input file not found: {input_path}")
 
-    with INPUT.open("r", newline="", encoding="utf-8-sig") as file:
+    with input_path.open("r", newline="", encoding="utf-8-sig") as file:
         reader = csv.DictReader(file)
         required = {"date", "product", "quantity", "unit_price"}
 
@@ -97,7 +99,7 @@ def main():
             })
 
     report = {
-        "input_file": str(INPUT.relative_to(BASE)),
+        "input_file": str(input_path),
         "rows_read": rows_read,
         "valid_rows": valid_rows,
         "invalid_rows": len(invalid_rows),
