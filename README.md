@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Python Data Analyzer
 
 A lightweight Python tool for analyzing sales data from CSV files.
@@ -39,3 +40,7 @@ Validate business requirements before using it in production.
 ## License
 
 MIT
+=======
+# python-data-analyzer
+A lightweight Python tool that analyzes sales data from CSV files, validates records, calculates revenue, and generates JSON and CSV reports.
+>>>>>>> 43299b4e29f424f7017b1279b29c2db0b3453404
